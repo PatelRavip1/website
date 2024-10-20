@@ -9,5 +9,7 @@ export default defineConfig({
   devToolbar: {
     enabled: false
   },
+  site: 'https://PatelRavip1.github.io',
+  base: 'website',
 
 });
