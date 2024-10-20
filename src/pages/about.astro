@@ -1,0 +1,75 @@
+---
+import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Ravi Patel">
+    <main>
+        <div>
+            <a href="/"> ↩ back</a>
+        </div>
+        <Image
+            class="imgs"
+            src="/myphoto.JPG"
+            alt="My Photo"
+            width="672"
+            height="448"
+        />
+        <p>
+            Born in 1997 in <a
+                href="https://www.google.com/maps/place/Mansa,+Gujarat,+India"
+                target="_blank">Mansa</a
+            >, Gujarat, India, and lived in a village named <a
+                href="https://www.google.com/maps/place/Parbatpura,+Gujarat+382845,+India/@23.4012902,72.6227276,896m/data=!3m1!1e3!4m6!3m5!1s0x395c33d82cd3136f:0xf789c250aa7e4dfa!8m2!3d23.399606!4d72.623987!16s%2Fg%2F11_rxltkg?entry=ttu&g_ep=EgoyMDI0MTAxNi4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank">Parbatpura</a
+            > for 24 years.<br />
+            Married to a beautiful and loving wife.<br />
+            Master's degree in IT from the University of Massachusetts, Boston.<br
+            /><br />
+            C is where my love for programming started, then Java, C#,.NET, and then
+            Python and Javascript.<br />I love Python; I love to automate things
+            in Python and have worked professionally with Javascript on Web
+            application development.
+        </p>
+    </main>
+</Layout>
+<style>
+    main {
+        margin: auto;
+        padding: 1rem;
+        width: 800px;
+        max-width: calc(100% - 2rem);
+        color: white;
+        font-size: 20px;
+        line-height: 1.6;
+        font-family: monospace;
+    }
+    p {
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        unicode-bidi: isolate;
+        max-width: 600px;
+        font-size: 0.9rem;
+    }
+    a {
+        color: white;
+        text-decoration: none;
+    }
+    .imgs {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        margin: 1rem;
+        border-radius: 5%;
+        object-fit: cover;
+        filter: grayscale(90%);
+        transition: filter 0.5s ease;
+    }
+    .imgs:hover {
+        filter: grayscale(0%);
+    }
+</style>
