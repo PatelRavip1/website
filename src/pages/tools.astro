@@ -10,28 +10,100 @@ import Layout from "../layouts/Layout.astro";
         <h2>Programing</h2>
         <ul>
             <li>
-                <a href="https://code.visualstudio.com/download" target="_blank"
-                    >VS Code↗</a
-                >
+                <a href="https://git-scm.com/" target="_blank">Git↗</a>
             </li>
-            <li>Git</li>
             <li>
                 <a href="https://github.com/patelravip1" target="_blank"
                     >Github↗</a
                 >
             </li>
+            <li>
+                <a href="https://code.visualstudio.com/download" target="_blank"
+                    >VS Code↗</a
+                >
+            </li>
+            <li>Fonts</li>
+            <ul>
+                <li>Consolas (Terminal)</li>
+                <li>monospace</li>
+                <li>
+                    <a
+                        href="https://fonts.google.com/specimen/Fira+Code"
+                        target="_blank">Fira code↗ (VS Code)</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="https://github.com/tonsky/font-writer"
+                        target="_blank"
+                    >
+                        Writer↗
+                    </a>
+                </li>
+            </ul>
+        </ul>
+        <h2>VSCode Extensions</h2>
+        <ul>
+            <li>
+                <a
+                    href="https://marketplace.visualstudio.com/items?itemName=supermaven.supermaven"
+                    target="_blank"
+                >
+                    Supermaven↗
+                </a>
+            </li>
+            <li>
+                <a
+                    href="https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme-icons"
+                    target="_blank"
+                >
+                    Material Theme Icons↗
+                </a>
+            </li>
         </ul>
         <h2>OS</h2>
         <ul>
-            <li>Windows</li>
+            <li>Windows 11</li>
+            <li>OxygenOS 12 (Android 12)</li>
         </ul>
         <h2>Browsers</h2>
         <ul>
+            <li>
+                <a href="https://arc.net/" target="_blank">Arc↗</a>
+            </li>
             <li>
                 <a href="https://brave.com/download/" target="_blank">Brave↗</a
                 >
             </li>
             <li>Edge</li>
+        </ul>
+        <h2>Softwares</h2>
+        <ul>
+            <li>
+                <a href="https://www.revouninstaller.com/" target="_blank"
+                    >Revo Uninstaller↗</a
+                >
+            </li>
+            <li>
+                <a href="https://github.com/seerge/g-helper" target="_blank"
+                    >G-Helper↗</a
+                >
+            </li>
+            <li>
+                <a
+                    href="https://www.bittorrent.com/downloads/complete/classic/"
+                    target="_blank">BitTorrent↓</a
+                >
+            </li>
+            <li>
+                <a href="https://ds4-windows.com/" target="_blank"
+                    >DS4Windows↗</a
+                >
+            </li>
+            <li>
+                <a href="https://www.videolan.org/vlc/" target="_blank">VLC↗</a
+                >
+            </li>
         </ul>
         <h2>Wesites</h2>
         <h4>Movies and Games</h4>
@@ -42,13 +114,25 @@ import Layout from "../layouts/Layout.astro";
                 <a href="https://fitgirl-repacks.site/" target="_blank"
                     >Fit Girl Repacks↗</a
                 >
-            </li><li>
-                <a
-                    href="https://www.bittorrent.com/downloads/complete/classic/"
-                    target="_blank">BitTorrent↓</a
+            </li>
+        </ul>
+        <h4>Other</h4>
+        <ul>
+            <li>
+                <a href="https://libgen.is/" target="_blank">Books↗</a>
+            </li>
+            <li>
+                <a href="https://news.ycombinator.com/" target="_blank"
+                    >Hacker News↗</a
+                >
+            </li>
+            <li>
+                <a href="https://bypasspaywallreader.com/" target="_blank"
+                    >Bypass paywalls in articles↗</a
                 >
             </li>
         </ul>
+
         <h2>Github repositories</h2>
         <ul></ul>
     </main>
@@ -88,5 +172,9 @@ import Layout from "../layouts/Layout.astro";
     a {
         color: white;
         text-decoration: none;
+    }
+    @font-face {
+        font-family: "CustomFont"; /* Name your font family */
+        src: url("/website/ttf/Writer-Regular.ttf"); /* Locate the .ttf file within your directory*/
     }
 </style>

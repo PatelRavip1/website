@@ -27,7 +27,7 @@ import Layout from "../layouts/Layout.astro";
         color: white;
         font-size: 20px;
         line-height: 1.6;
-        font-family: monospace;
+        font-family: "CustomFont", monospace;
     }
     p {
         display: block;
@@ -44,5 +44,10 @@ import Layout from "../layouts/Layout.astro";
         font-size: 1rem;
         text-decoration: none;
         font-weight: bold;
+    }
+
+    @font-face {
+        font-family: "CustomFont"; /* Name your font family */
+        src: url("/website/ttf/Writer-Regular.ttf"); /* Locate the .ttf file within your directory*/
     }
 </style>

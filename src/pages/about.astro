@@ -43,7 +43,7 @@ import Layout from "../layouts/Layout.astro";
         color: white;
         font-size: 20px;
         line-height: 1.6;
-        font-family: monospace;
+        font-family: "CustomFont", monospace;
     }
     p {
         display: block;
@@ -52,7 +52,7 @@ import Layout from "../layouts/Layout.astro";
         margin-inline-start: 0px;
         margin-inline-end: 0px;
         unicode-bidi: isolate;
-        max-width: 600px;
+        max-width: 650px;
         font-size: 0.9rem;
     }
     a {
@@ -71,5 +71,10 @@ import Layout from "../layouts/Layout.astro";
     }
     .imgs:hover {
         filter: grayscale(0%);
+    }
+
+    @font-face {
+        font-family: "CustomFont"; /* Name your font family */
+        src: url("/website/ttf/Writer-Regular.ttf"); /* Locate the .ttf file within your directory*/
     }
 </style>
