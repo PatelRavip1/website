@@ -39,6 +39,9 @@ import Nav from "../components/nav.astro";
 </Layout>
 
 <style>
+	html {
+		background-color: #0e1116;
+	}
 	main {
 		margin: auto;
 		padding: 1rem;
@@ -65,6 +68,14 @@ import Nav from "../components/nav.astro";
 	.icon {
 		cursor: pointer;
 		height: 2rem;
+		border-radius: 50%;
+
+		box-shadow:
+			0 -10px 10px rgba(255, 255, 255, 0.05),
+			inset 0 -10px 10px rgba(255, 255, 255, 0.05),
+			0 10px 10px rgba(0, 0, 0, 0.3),
+			inset 0 10px 10px rgba(0, 0, 0, 0.3);
+		transition: all ease 0.2s;
 	}
 	a {
 		color: white;

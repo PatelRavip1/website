@@ -35,6 +35,9 @@ import Layout from "../layouts/Layout.astro";
     </main>
 </Layout>
 <style>
+    html {
+        background-color: #0e1116;
+    }
     main {
         margin: auto;
         padding: 1rem;
@@ -46,12 +49,6 @@ import Layout from "../layouts/Layout.astro";
         font-family: "CustomFont", monospace;
     }
     p {
-        display: block;
-        margin-block-start: 1em;
-        margin-block-end: 1em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-        unicode-bidi: isolate;
         max-width: 650px;
         font-size: 0.9rem;
     }
@@ -74,7 +71,7 @@ import Layout from "../layouts/Layout.astro";
     }
 
     @font-face {
-        font-family: "CustomFont"; /* Name your font family */
-        src: url("/website/ttf/Writer-Regular.ttf"); /* Locate the .ttf file within your directory*/
+        font-family: "CustomFont";
+        src: url("/website/ttf/Writer-Regular.ttf");
     }
 </style>

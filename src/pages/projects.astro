@@ -1,0 +1,69 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+---
+
+<!-- make graid of project cards where I can show image and some detail at bottom and  link card to project github links-->
+<Layout title="My Projects">
+    <main>
+        <div>
+            <a href="/website/"> ↩ back</a>
+        </div>
+        <h2>Projects</h2>
+        <div class="link-card-grid">
+            <!-- https://github.com/PatelRavip1/pygame-dots-and-boxs 
+             https://github.com/PatelRavip1/movie_library
+             https://github.com/PatelRavip1/Fast-API
+             https://github.com/PatelRavip1/Express-API-Email-Attachment
+            -->
+            <Card
+                title="Website"
+                body="This is my personal website, built with Astro."
+                href="https://github.com/patelravip1/website"
+            />
+            <Card
+                title="Pygame Dots and Boxs"
+                body="A simple game made with pygame."
+                href="https://github.com/PatelRavip1/pygame-dots-and-boxs"
+            />
+            <Card
+                title="Movie Library"
+                body="Movie library built with Rust."
+                href="https://github.com/PatelRavip1/movie_library"
+            />
+            <Card
+                title="Fast API"
+                body="API boilerplate with FastAPI."
+                href="https://github.com/PatelRavip1/Fast-API"
+            />
+            <Card
+                title="Express API Email Attachment"
+                body="A script to add attchment in emails."
+                href="https://github.com/PatelRavip1/Express-API-Email-Attachment"
+            />
+        </div>
+    </main>
+</Layout>
+
+<style>
+    main {
+        margin: auto;
+        padding: 1rem;
+        width: 800px;
+        max-width: calc(100% - 2rem);
+        color: white;
+        font-size: 15px;
+        line-height: 1.6;
+        font-family: "CustomFont", monospace;
+    }
+    @font-face {
+        font-family: "CustomFont"; /* Name your font family */
+        src: url("/website/ttf/Writer-Regular.ttf"); /* Locate the .ttf file within your directory*/
+    }
+    .link-card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(24ch, 1fr));
+        gap: 2rem;
+        padding: 0;
+    }
+</style>

@@ -4,24 +4,194 @@
 
 <header>
     <div class="header">
-        <ul>
-            <!-- <img
-                src="./ravi.png"
-                alt="LOGO"
-                class="icon"
-                onclick="location.href='/'"
-            /> -->
-        </ul>
+        <div class="clock">
+            <svg
+                class="clockface"
+                width="150"
+                height="150"
+                viewBox="-150 -150 300 300"
+            >
+                <circle class="ring ring--seconds" r="145" pathLength="60"
+                ></circle>
+                <circle class="ring ring--hours" r="145" pathLength="12"
+                ></circle>
+                <text x="50" y="-5" class="date">12</text>
+                <text x="50" y="15" class="am-pm">am</text>
+                <line
+                    id="minute"
+                    class="hand--minute"
+                    x1="0"
+                    y1="2"
+                    x2="0"
+                    y2="-110"></line>
+                <line id="hour" class="hand--hour" x1="0" y1="2" x2="0" y2="-60"
+                ></line>
+                <circle class="ring ring--center" r="3"></circle>
+                <line
+                    id="second"
+                    class="hand hand--second"
+                    x1="0"
+                    y1="12"
+                    x2="0"
+                    y2="-130"></line>
+            </svg>
+            <script>
+                function updateClock() {
+                    const now = new Date();
+                    const seconds =
+                        ((now.getSeconds() + now.getMilliseconds() / 1000) /
+                            60) *
+                        360;
+                    const minutes =
+                        ((now.getMinutes() + now.getSeconds() / 60) / 60) * 360;
+                    const hours =
+                        (((now.getHours() % 12) + now.getMinutes() / 60) / 12) *
+                        360;
+
+                    const secondHand = document.getElementById("second");
+                    const minuteHand = document.getElementById("minute");
+                    const hourHand = document.getElementById("hour");
+                    const dateElement = document.querySelector(".date");
+                    const amPmElement = document.querySelector(".am-pm");
+
+                    if (secondHand)
+                        secondHand.style.transform = `rotate(${seconds}deg)`;
+                    if (minuteHand)
+                        minuteHand.style.transform = `rotate(${minutes}deg)`;
+                    if (hourHand)
+                        hourHand.style.transform = `rotate(${hours}deg)`;
+                    if (dateElement)
+                        dateElement.textContent = String(now.getDate());
+                    if (amPmElement)
+                        amPmElement.textContent =
+                            now.getHours() >= 12 ? "PM" : "AM";
+                }
+
+                setInterval(updateClock, 10); // Update every 100ms for smoother seconds
+                updateClock(); // Initial call
+            </script>
+        </div>
+
+        <!-- <div class="time">
+            <span id="boston-date"></span><br />
+            <span id="boston-time"></span>
+            <script>
+                function updateTime() {
+                    const dateTimeFormat = new Intl.DateTimeFormat("en-US", {
+                        timeZone: "America/New_York",
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric",
+                    });
+                    const dateFormate = new Intl.DateTimeFormat("en-US", {
+                        timeZone: "America/New_York",
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                    });
+                    const dateString = dateFormate.format(new Date());
+                    const timeString = dateTimeFormat.format(new Date());
+                    const timeElement = document.getElementById("boston-time");
+                    const dateElement = document.getElementById("boston-date");
+                    if (timeElement) {
+                        timeElement.textContent = timeString;
+                    }
+                    if (dateElement) {
+                        dateElement.textContent = dateString;
+                    }
+                }
+                // Update every second
+                setInterval(updateTime, 1000);
+                updateTime(); // Initial call
+            </script>
+        </div> -->
     </div>
 
     <style>
-        .icon {
-            cursor: pointer;
-            height: 6rem;
-        }
-        ul {
-            /* height: 14rem; */
+        /* make clock mobile friendly */
+
+        .header {
             display: flex;
+            justify-content: right;
+            font-size: 15px;
+        }
+
+        .clock {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem;
+            z-index: 1000;
+            border-radius: 50%;
+            box-shadow:
+                0 -15px 15px rgba(255, 255, 255, 0.05),
+                inset 0 -15px 15px rgba(255, 255, 255, 0.05),
+                0 15px 15px rgba(0, 0, 0, 0.3),
+                inset 0 15px 15px rgba(0, 0, 0, 0.3);
+            transition: all ease 0.2s;
+        }
+
+        .clockface {
+            filter: drop-shadow(2px 10px 10px dark);
+        }
+
+        .ring--seconds,
+        .ring--hours {
+            fill: transparent;
+            stroke-width: 5;
+        }
+
+        .ring--seconds {
+            fill: #0e1116;
+            stroke: white;
+            stroke-dasharray: 0.1 0.9;
+            stroke-dashoffset: 0.05;
+        }
+
+        .ring--hours {
+            stroke: #5bdeff;
+            stroke-dasharray: 0.05 0.95;
+            stroke-dashoffset: 0.025;
+        }
+
+        .ring--center {
+            fill: pink;
+            stroke: white;
+            stroke-width: 2.5;
+        }
+
+        .hand {
+            stroke: pink;
+            stroke-linecap: round;
+            stroke-width: 2;
+        }
+
+        .hand--hour,
+        .hand--minute {
+            stroke-width: 5;
+        }
+
+        .hand--hour {
+            transform: rotate(45deg);
+            stroke: white;
+            border-radius: 6px;
+        }
+
+        .hand--minute {
+            stroke: #93bef4;
+            transform: rotate(93deg);
+        }
+
+        .date {
+            fill: white;
+            font-size: 2.5rem;
+        }
+
+        .am-pm {
+            fill: #93bef4;
+            font-size: 1.5rem;
+            text-transform: uppercase;
         }
     </style>
 </header>
