@@ -69,6 +69,8 @@ import Nav from "../components/nav.astro";
 		cursor: pointer;
 		height: 2rem;
 		border-radius: 50%;
+		/* opacity: 0.6; */
+		transition: filter 0.5s ease;
 
 		box-shadow:
 			0 -10px 10px rgba(255, 255, 255, 0.05),
@@ -76,6 +78,9 @@ import Nav from "../components/nav.astro";
 			0 10px 10px rgba(0, 0, 0, 0.3),
 			inset 0 10px 10px rgba(0, 0, 0, 0.3);
 		transition: all ease 0.2s;
+	}
+	.icon:hover {
+		filter: opacity(0.6);
 	}
 	a {
 		color: white;
