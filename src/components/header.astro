@@ -16,7 +16,7 @@
                 <circle class="ring ring--hours" r="145" pathLength="12"
                 ></circle>
                 <text x="50" y="0" class="date">12</text>
-                <text x="-10" y="-40" class="am-pm">am</text>
+                <text x="-13    " y="-40" class="am-pm">am</text>
                 <text x="0" y="-70" class="day-night">🌙</text>
                 <line
                     id="minute"
@@ -50,7 +50,6 @@
                     timezone: string;
                     utc_offset: number;
                 }
-
                 async function fetchSunTimes(): Promise<SunTimes> {
                     const response = await fetch(
                         "https://api.sunrisesunset.io/json?lat=42.1626&lng=-71.04116",
@@ -58,48 +57,45 @@
                     const data = await response.json();
                     return data.results; // This should match the SunTimes structure
                 }
-
                 function convertTo24HourFormat(
                     timeString: string,
                 ): [number, number] {
                     const [time, modifier] = timeString.split(" ");
                     let [hours, minutes] = time.split(":").map(Number);
-
                     if (modifier === "PM" && hours !== 12) {
                         hours += 12; // Convert PM hours to 24-hour format
                     } else if (modifier === "AM" && hours === 12) {
                         hours = 0; // Convert midnight hour (12 AM) to 0
                     }
-
                     return [hours, minutes]; // Return as an array
                 }
-
                 function updateClock(sunTimes: SunTimes) {
-                    console.log("here");
                     const now = new Date();
-                    const hours = now.getHours();
-                    const minutes = now.getMinutes();
-                    const seconds = now.getSeconds();
-
-                    // Convert sunrise and sunset times to 24-hour format
+                    const bostonTime = now.toLocaleString("en-US", {
+                        timeZone: "America/New_York",
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric",
+                        hour12: false,
+                        fractionalSecondDigits: 3,
+                    });
+                    const [hours, minutes, seconds] = bostonTime
+                        .split(":")
+                        .map(Number);
                     const [sunriseHours, sunriseMinutes] =
                         convertTo24HourFormat(sunTimes.sunrise);
                     const [sunsetHours, sunsetMinutes] = convertTo24HourFormat(
                         sunTimes.sunset,
                     );
-
                     // Convert sunrise and sunset to minutes since midnight for easier comparison
                     const sunriseTotalMinutes =
                         sunriseHours * 60 + sunriseMinutes;
                     const sunsetTotalMinutes = sunsetHours * 60 + sunsetMinutes;
                     const currentTotalMinutes = hours * 60 + minutes;
-
-                    const secondsAngle =
-                        ((seconds + now.getMilliseconds() / 1000) / 60) * 360;
+                    const secondsAngle = (seconds / 60) * 360;
                     const minutesAngle = ((minutes + seconds / 60) / 60) * 360;
                     const hoursAngle =
                         (((hours % 12) + minutes / 60) / 12) * 360;
-
                     const secondHand = document.getElementById("second");
                     const minuteHand = document.getElementById("minute");
                     const hourHand = document.getElementById("hour");
@@ -107,7 +103,6 @@
                     const amPmElement = document.querySelector(".am-pm");
                     const dayNightElement =
                         document.querySelector(".day-night");
-
                     if (secondHand)
                         secondHand.style.transform = `rotate(${secondsAngle}deg)`;
                     if (minuteHand)
@@ -118,7 +113,6 @@
                         dateElement.textContent = String(now.getDate());
                     if (amPmElement)
                         amPmElement.textContent = hours >= 12 ? "PM" : "AM";
-
                     // Determine day or night based on sunrise and sunset
                     if (dayNightElement) {
                         if (
@@ -131,7 +125,6 @@
                         }
                     }
                 }
-
                 async function startClock() {
                     let sunTimes = await fetchSunTimes();
                     updateClock(sunTimes); // Initial call
@@ -142,11 +135,9 @@
                         sunTimes = await fetchSunTimes();
                     }, 1800000);
                 }
-
                 startClock(); // Start the clock and fetch sunrise/sunset times
             </script>
         </div>
-
         <!-- <div class="time">
             <span id="boston-date"></span><br />
             <span id="boston-time"></span>
@@ -181,7 +172,6 @@
             </script>
         </div> -->
     </div>
-
     <style>
         .header {
             display: flex;
