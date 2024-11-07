@@ -15,7 +15,8 @@
                 ></circle>
                 <circle class="ring ring--hours" r="145" pathLength="12"
                 ></circle>
-                <text x="50" y="0" class="date">12</text>
+                <text x="50" y="0" class="date">01</text>
+                <text x="50" y="15" class="month">Jan</text>
                 <text x="-13    " y="-40" class="am-pm">am</text>
                 <text x="0" y="-70" class="day-night">🌙</text>
                 <line
@@ -100,6 +101,7 @@
                     const minuteHand = document.getElementById("minute");
                     const hourHand = document.getElementById("hour");
                     const dateElement = document.querySelector(".date");
+                    const monthElement = document.querySelector(".month");
                     const amPmElement = document.querySelector(".am-pm");
                     const dayNightElement =
                         document.querySelector(".day-night");
@@ -111,6 +113,11 @@
                         hourHand.style.transform = `rotate(${hoursAngle}deg)`;
                     if (dateElement)
                         dateElement.textContent = String(now.getDate());
+                    if (monthElement)
+                        monthElement.textContent = now.toLocaleString("en-US", {
+                            timeZone: "America/New_York",
+                            month: "short",
+                        });
                     if (amPmElement)
                         amPmElement.textContent = hours >= 12 ? "PM" : "AM";
                     // Determine day or night based on sunrise and sunset
@@ -253,7 +260,10 @@
             fill: white;
             font-size: 2.5rem;
         }
-
+        .month {
+            fill: white;
+            font-size: 1rem;
+        }
         .am-pm {
             fill: #93bef4;
             font-size: 1.5rem;
