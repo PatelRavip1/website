@@ -1,5 +1,6 @@
 {
   "name": "website",
+  "description": "Personal retro pixel-themed portfolio website for Ravi Patel built with Astro and Tailwind CSS",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
