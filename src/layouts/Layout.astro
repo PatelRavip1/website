@@ -1,16 +1,27 @@
 ---
 interface Props {
 	title: string;
+	description?: string;
 }
 
-const { title } = Astro.props;
+const { 
+	title, 
+	description = "Personal retro pixel-art portfolio website for Ravi Patel built with Astro and Tailwind CSS" 
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Ravi Patel - Personal Portfolio" />
+		<meta name="description" content={description} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://patelravip1.github.io/website/" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" href="/website/ravi.png" />
 		<meta name="generator" content={Astro.generator} />
