@@ -194,17 +194,19 @@
             margin: 1rem;
             z-index: 1000;
             border-radius: 50%;
-            border: #0e1116 solid 3px;
+            border: var(--ctp-surface1) solid 3px;
+            background: var(--ctp-surface0);
             box-shadow:
-                0 -15px 15px rgba(255, 255, 255, 0.05),
-                0 15px 15px rgba(0, 0, 0, 0.3),
-                inset 0 -15px 15px rgba(255, 255, 255, 0.05),
-                inset 0 15px 15px rgba(0, 0, 0, 0.3);
+                0 0 0 2px var(--pixel-black),
+                3px 3px 0 0 var(--pixel-black),
+                inset 2px 2px 0 0 var(--ctp-surface1),
+                inset -2px -2px 0 0 var(--ctp-base);
             transition: all ease 0.2s;
         }
 
         .clockface {
-            filter: drop-shadow(2px 10px 10px dark);
+            filter: drop-shadow(2px 6px 6px rgba(17, 17, 27, 0.6));
+            shape-rendering: geometricPrecision;
         }
 
         .ring--seconds,
@@ -215,66 +217,70 @@
         }
 
         .ring--seconds {
-            fill: #0e1116;
-            stroke: white;
+            fill: var(--ctp-base);
+            stroke: var(--ctp-overlay0);
             stroke-dasharray: 0.1 0.9;
             stroke-dashoffset: 0.05;
         }
 
         .ring--hours {
-            stroke: #5bdeff;
+            stroke: var(--ctp-blue);
             stroke-dasharray: 0.05 0.95;
             stroke-dashoffset: 0.025;
         }
 
         .ring--center {
-            fill: pink;
-            stroke: white;
+            fill: var(--ctp-lavender);
+            stroke: var(--ctp-text);
             stroke-width: 2.5;
         }
 
         .hand {
-            stroke: pink;
-            stroke-linecap: round;
+            stroke: var(--ctp-red);
+            stroke-linecap: square;
             stroke-width: 2;
         }
 
         .hand--hour,
         .hand--minute {
             stroke-width: 5;
-            stroke-linecap: round;
+            stroke-linecap: square;
         }
 
         .hand--hour {
             transform: rotate(15deg);
-            stroke: white;
-            border-radius: 6px;
+            stroke: var(--ctp-text);
         }
 
         .hand--minute {
-            stroke: #93bef4;
+            stroke: var(--ctp-blue);
             transform: rotate(30deg);
         }
 
         .date {
-            fill: white;
+            fill: var(--ctp-text);
             font-size: 2.5rem;
+            font-family: var(--font-mono);
+            font-weight: 700;
         }
         .month {
-            fill: white;
+            fill: var(--ctp-subtext0);
             font-size: 1rem;
+            font-family: var(--font-mono);
+            font-weight: 600;
         }
         .am-pm {
-            fill: #93bef4;
+            fill: var(--ctp-blue);
             font-size: 1.5rem;
             text-transform: uppercase;
+            font-family: var(--font-mono);
+            font-weight: 700;
         }
         .day-night {
             font-size: 2.5rem;
-            fill: white; /* Adjust as needed */
-            text-anchor: middle; /* Center the text */
-            opacity: 0.7; /* Adjust opacity value (0.0 to 1.0) */
-            /* transition: opacity 0.3s ease; */
+            fill: var(--ctp-text);
+            text-anchor: middle;
+            opacity: 0.9;
         }
     </style>
 </header>

@@ -10,41 +10,315 @@ const { title } = Astro.props;
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
+		<meta name="description" content="Ravi Patel - Personal Portfolio" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" href="/website/ravi.png" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
 	<body>
+		<!-- Retro 8-bit Sound Effects Toggle Bar -->
+		<div class="sfx-control-bar">
+			<button id="sfx-toggle-btn" class="pixel-sfx-btn" title="Toggle 8-bit Sound Effects" aria-label="Toggle Sound Effects">
+				<span id="sfx-icon">🔇</span>
+				<span id="sfx-text">SFX: OFF</span>
+			</button>
+		</div>
+
 		<slot />
+
+		<!-- 8-Bit Chiptune Sound Engine (Robust Global Delegation & AudioContext Lifecycle) -->
+		<script is:inline>
+			(() => {
+				class SoundEngine {
+					constructor() {
+						this.ctx = null;
+						this.enabled = false;
+						this.masterGain = null;
+					}
+
+					init() {
+						if (this.ctx) return;
+						try {
+							const AudioCtx = window.AudioContext || window.webkitAudioContext;
+							this.ctx = new AudioCtx();
+							this.masterGain = this.ctx.createGain();
+							this.masterGain.gain.value = 0.25; // Clear audible master volume
+							this.masterGain.connect(this.ctx.destination);
+						} catch (e) {
+							console.warn("Web Audio not supported", e);
+						}
+					}
+
+					ensureRunning() {
+						if (!this.ctx) this.init();
+						if (this.ctx && this.ctx.state === 'suspended') {
+							this.ctx.resume().catch(() => {});
+						}
+					}
+
+					toggle() {
+						this.ensureRunning();
+						this.enabled = !this.enabled;
+						localStorage.setItem('portfolio_sfx_enabled', this.enabled ? 'true' : 'false');
+						return this.enabled;
+					}
+
+					playTone(freq, type = 'square', duration = 0.08, startTime = 0, gainLevel = 0.25) {
+						if (!this.enabled) return;
+						this.ensureRunning();
+						if (!this.ctx) return;
+
+						try {
+							const now = this.ctx.currentTime;
+							const osc = this.ctx.createOscillator();
+							const gain = this.ctx.createGain();
+							osc.type = type;
+							osc.frequency.setValueAtTime(freq, now + startTime);
+
+							gain.gain.setValueAtTime(gainLevel, now + startTime);
+							gain.gain.exponentialRampToValueAtTime(0.001, now + startTime + duration);
+
+							osc.connect(gain);
+							gain.connect(this.masterGain);
+
+							osc.start(now + startTime);
+							osc.stop(now + startTime + duration);
+						} catch (e) {}
+					}
+
+					hover() {
+						// Crisp 880Hz retro triangle blip (audible & pleasant)
+						this.playTone(880, 'triangle', 0.05, 0, 0.2);
+					}
+
+					click() {
+						// Two-tone arcade select chime
+						this.playTone(523.25, 'square', 0.05, 0, 0.28); // C5
+						this.playTone(783.99, 'square', 0.08, 0.04, 0.28); // G5
+					}
+
+					fanfare() {
+						// 4-note victory arpeggio on toggle ON
+						const notes = [523.25, 659.25, 783.99, 1046.50];
+						notes.forEach((freq, idx) => {
+							this.playTone(freq, 'square', 0.12, idx * 0.08, 0.25);
+						});
+					}
+				}
+
+				const sound = new SoundEngine();
+				window.pixelSound = sound;
+
+				document.addEventListener('DOMContentLoaded', () => {
+					const btn = document.getElementById('sfx-toggle-btn');
+					const icon = document.getElementById('sfx-icon');
+					const text = document.getElementById('sfx-text');
+
+					// Clean up any legacy keys that might have been stuck as 'true'
+					try {
+						localStorage.removeItem('nord_sfx_enabled');
+						localStorage.removeItem('catppuccin_sfx_enabled');
+					} catch(e) {}
+
+					// Restore saved state: defaults to OFF unless explicitly saved as 'true'
+					const isSavedOn = localStorage.getItem('portfolio_sfx_enabled') === 'true';
+					if (isSavedOn) {
+						sound.enabled = true;
+						if (icon) icon.textContent = '🔊';
+						if (text) text.textContent = 'SFX: ON';
+						if (btn) btn.classList.add('active');
+					} else {
+						sound.enabled = false;
+						if (icon) icon.textContent = '🔇';
+						if (text) text.textContent = 'SFX: OFF';
+						if (btn) btn.classList.remove('active');
+					}
+
+					// Ensure context wakes up on ANY user gesture anywhere on page
+					const unlockAudio = () => {
+						if (sound.enabled) {
+							sound.ensureRunning();
+						}
+					};
+					window.addEventListener('pointerdown', unlockAudio, { once: false, passive: true });
+					window.addEventListener('keydown', unlockAudio, { once: false, passive: true });
+
+					if (btn) {
+						btn.addEventListener('click', (e) => {
+							e.stopPropagation();
+							const isOn = sound.toggle();
+							if (icon) icon.textContent = isOn ? '🔊' : '🔇';
+							if (text) text.textContent = isOn ? 'SFX: ON' : 'SFX: OFF';
+							btn.classList.toggle('active', isOn);
+							if (isOn) sound.fanfare();
+						});
+					}
+
+					// Robust Global Event Delegation for ALL buttons, links, icons & clickable items
+					let lastHovered = null;
+					document.addEventListener('mouseover', (e) => {
+						if (!sound.enabled) return;
+						const target = e.target.closest('a, button, .icon, [onclick], .link-card, input');
+						if (target && target !== lastHovered && target.id !== 'sfx-toggle-btn') {
+							lastHovered = target;
+							sound.hover();
+						}
+					}, true);
+
+					document.addEventListener('mouseout', (e) => {
+						const target = e.target.closest('a, button, .icon, [onclick], .link-card, input');
+						if (target === lastHovered) {
+							lastHovered = null;
+						}
+					}, true);
+
+					document.addEventListener('click', (e) => {
+						if (!sound.enabled) return;
+						const target = e.target.closest('a, button, .icon, [onclick], .link-card, input');
+						if (target && target.id !== 'sfx-toggle-btn') {
+							sound.click();
+						}
+					}, true);
+				});
+			})();
+		</script>
 	</body>
 </html>
+
 <style is:global>
 	:root {
-		--accent: 104, 184, 249;
-		--accent-light: 225, 224, 250;
-		--accent-dark: 49, 10, 101;
+		/* =========================================================================
+		   OFFICIAL CATPPUCCIN MOCHA PALETTE
+		   ========================================================================= */
+		--ctp-rosewater: #f5e0dc;
+		--ctp-flamingo:  #f2cdcd;
+		--ctp-pink:      #f5c2e7;
+		--ctp-mauve:     #cba6f7;
+		--ctp-red:       #f38ba8;
+		--ctp-maroon:    #eba0ac;
+		--ctp-peach:     #fab387;
+		--ctp-yellow:    #f9e2af;
+		--ctp-green:     #a6e3a1;
+		--ctp-teal:      #94e2d5;
+		--ctp-sky:       #89dceb;
+		--ctp-sapphire:  #74c7ec;
+		--ctp-blue:      #89b4fa;
+		--ctp-lavender:  #b4befe;
+		--ctp-text:      #cdd6f4;
+		--ctp-subtext1:  #bac2de;
+		--ctp-subtext0:  #a6adc8;
+		--ctp-overlay2:  #9399b2;
+		--ctp-overlay1:  #7f849c;
+		--ctp-overlay0:  #6c7086;
+		--ctp-surface2:  #585b70;
+		--ctp-surface1:  #45475a;
+		--ctp-surface0:  #313244;
+		--ctp-base:      #1e1e2e;
+		--ctp-mantle:    #181825;
+		--ctp-crust:     #11111b;
+
+		/* Retro Pixel Art Theme Tokens */
+		--pixel-black:   var(--ctp-crust);
+		--pixel-glow:    rgba(137, 180, 250, 0.4); /* Mocha Blue glow */
+
+		/* Typography */
+		--font-mono: 'JetBrains Mono NL', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+
+		/* Astro theme compatibility */
+		--accent: 137, 180, 250; /* Mocha Blue */
+		--accent-light: 205, 214, 244; /* Mocha Text */
+		--accent-dark: 24, 24, 37; /* Mocha Mantle */
 		--accent-gradient: linear-gradient(
 			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
+			var(--ctp-blue),
+			var(--ctp-lavender) 35%,
+			var(--ctp-text) 70%
 		);
 	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
+
+	*, *::before, *::after {
+		box-sizing: border-box;
 	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
+
+	html {
+		font-family: var(--font-mono);
+		background-color: var(--ctp-base);
+		background-image: 
+			radial-gradient(rgba(88, 91, 112, 0.35) 1.5px, transparent 1.5px);
+		background-size: 16px 16px;
+		color: var(--ctp-text);
+		text-rendering: optimizeSpeed;
+		-webkit-font-smoothing: antialiased;
+		min-height: 100vh;
+		scroll-behavior: smooth;
+	}
+
+	body {
+		margin: 0;
+		padding: 1.5rem;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%2311111b" d="M0,0 L0,14 L4,10 L7,16 L10,14 L7,8 L12,8 Z"/><path fill="%2389b4fa" d="M1,2 L1,12 L4,9 L7,14 L8,13 L5,8 L10,8 Z"/><rect x="2" y="3" width="1" height="6" fill="%23cdd6f4"/></svg>'), default;
+	}
+
+	@media (max-width: 640px) {
+		body {
+			padding: 0.75rem;
+		}
+	}
+
+	button, a, .clickable, .icon, .link-card {
+		cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%2311111b" d="M5,1 L9,1 L9,5 L14,5 L14,14 L3,14 L3,5 L5,5 Z"/><path fill="%2389b4fa" d="M6,2 L8,2 L8,6 L13,6 L13,13 L4,13 L4,6 L6,6 Z"/><rect x="7" y="3" width="1" height="3" fill="%23cdd6f4"/></svg>'), pointer !important;
+	}
+
+	code, pre {
+		font-family: var(--font-mono);
+	}
+
+	/* SFX Floating Control Bar */
+	.sfx-control-bar {
+		position: fixed;
+		top: 1rem;
+		right: 1.2rem;
+		z-index: 9999;
+	}
+
+	.pixel-sfx-btn {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		font-weight: 800;
+		padding: 0.45rem 0.85rem;
+		background: var(--ctp-surface0);
+		color: var(--ctp-subtext1);
+		border: 3px solid var(--ctp-surface1);
+		box-shadow: 
+			3px 3px 0 0 var(--pixel-black),
+			inset 2px 2px 0 0 var(--ctp-surface2);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		transition: transform 0.05s ease, border-color 0.15s ease, color 0.15s ease;
+		user-select: none;
+	}
+
+	.pixel-sfx-btn:hover {
+		border-color: var(--ctp-blue);
+		color: var(--ctp-blue);
+		background: var(--ctp-surface1);
+	}
+
+	.pixel-sfx-btn.active {
+		border-color: var(--ctp-green);
+		color: var(--ctp-green);
+		box-shadow: 
+			2px 2px 0 0 var(--pixel-black),
+			0 0 10px rgba(166, 227, 161, 0.4);
+	}
+
+	.pixel-sfx-btn:active {
+		transform: translate(2px, 2px);
+		box-shadow: 1px 1px 0 0 var(--pixel-black);
 	}
 </style>

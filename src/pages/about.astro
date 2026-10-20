@@ -19,9 +19,11 @@ import Layout from "../layouts/Layout.astro";
         />
         <p>
             Born in 1997 in <a
+                class="plain-link"
                 href="https://www.google.com/maps/place/Mansa,+Gujarat,+India"
                 target="_blank">Mansa</a
             >, Gujarat, India, and lived in a village named <a
+                class="plain-link"
                 href="https://www.google.com/maps/place/Parbatpura,+Gujarat+382845,+India/@23.4012902,72.6227276,896m/data=!3m1!1e3!4m6!3m5!1s0x395c33d82cd3136f:0xf789c250aa7e4dfa!8m2!3d23.399606!4d72.623987!16s%2Fg%2F11_rxltkg?entry=ttu&g_ep=EgoyMDI0MTAxNi4wIKXMDSoASAFQAw%3D%3D"
                 target="_blank">Parbatpura</a
             > for 24 years.<br />
@@ -36,43 +38,93 @@ import Layout from "../layouts/Layout.astro";
     </main>
 </Layout>
 <style>
-    html {
-        background-color: #0e1116;
-    }
     main {
         margin: auto;
-        padding: 1rem;
-        width: 800px;
-        max-width: calc(100% - 2rem);
-        color: white;
-        font-size: 20px;
-        line-height: 1.6;
-        font-family: "CustomFont", monospace;
-    }
-    p {
-        max-width: 650px;
-        font-size: 0.9rem;
-    }
-    a {
-        color: white;
-        text-decoration: none;
-    }
-    .imgs {
-        width: 100%;
-        max-width: 200px;
-        height: auto;
-        margin: 1rem;
-        border-radius: 5%;
-        object-fit: cover;
-        filter: grayscale(90%);
-        transition: filter 0.5s ease;
-    }
-    .imgs:hover {
-        filter: grayscale(0%);
+        padding: 2.5rem 3rem;
+        width: 1050px;
+        max-width: 100%;
+        background: var(--ctp-surface0);
+        border: 4px solid var(--ctp-surface1);
+        box-shadow: 
+            0 -4px 0 0 var(--pixel-black),
+            0 4px 0 0 var(--pixel-black),
+            -4px 0 0 0 var(--pixel-black),
+            4px 0 0 0 var(--pixel-black),
+            inset 2px 2px 0 0 var(--ctp-surface2),
+            inset -2px -2px 0 0 var(--ctp-mantle),
+            0 0 18px var(--pixel-glow);
+        color: var(--ctp-text);
+        font-family: var(--font-mono);
     }
 
-    @font-face {
-        font-family: "CustomFont";
-        src: url("/website/ttf/Writer-Regular.ttf");
+    p {
+        max-width: 850px;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: var(--ctp-text);
+        margin-top: 1rem;
+    }
+
+    a {
+        color: var(--ctp-blue);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        transition: color 0.1s ease;
+    }
+
+    a:hover {
+        color: var(--ctp-lavender);
+    }
+
+    .plain-link,
+    .plain-link:hover,
+    .plain-link:visited,
+    .plain-link:active {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    div > a[href="/website/"] {
+        text-decoration: none;
+        color: var(--ctp-blue);
+        font-weight: 700;
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+        background: var(--ctp-mantle);
+        border: 2px solid var(--ctp-surface1);
+        box-shadow: 2px 2px 0 0 var(--pixel-black);
+        display: inline-block;
+        margin-bottom: 1rem;
+        transition: all 0.1s ease;
+    }
+
+    div > a[href="/website/"]:hover {
+        border-color: var(--ctp-blue);
+        color: var(--ctp-text);
+        background: var(--ctp-surface1);
+        transform: translate(1px, -1px);
+    }
+
+    .imgs {
+        width: 100%;
+        max-width: 220px;
+        height: auto;
+        margin: 1rem 0;
+        border-radius: 0;
+        border: 3px solid var(--ctp-surface1);
+        box-shadow: 3px 3px 0 0 var(--pixel-black);
+        object-fit: cover;
+        filter: grayscale(80%);
+        transition: filter 0.4s ease, border-color 0.2s ease;
+    }
+
+    .imgs:hover {
+        filter: grayscale(0%);
+        border-color: var(--ctp-blue);
+    }
+    @media (max-width: 640px) {
+        main {
+            padding: 1.5rem 1.25rem;
+        }
     }
 </style>

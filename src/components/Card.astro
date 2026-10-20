@@ -23,39 +23,58 @@ const { href, title, body } = Astro.props;
 	.link-card {
 		list-style: none;
 		display: flex;
-		padding: 1px;
-		background-color: #23262d;
-		background-image: none;
-		background-size: 400%;
-		border-radius: 7px;
-		background-position: 100%;
-		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+		background-color: var(--ctp-mantle);
+		border: 3px solid var(--ctp-surface1);
+		box-shadow: 3px 3px 0 0 var(--pixel-black);
+		border-radius: 0;
+		transition: transform 0.1s ease, border-color 0.1s ease, box-shadow 0.1s ease;
 	}
+
 	.link-card > a {
 		width: 100%;
 		text-decoration: none;
 		line-height: 1.4;
-		padding: calc(1.5rem - 1px);
-		border-radius: 8px;
-		color: white;
-		background-color: #23262d;
-		opacity: 0.8;
+		padding: 1.3rem;
+		color: var(--ctp-text);
+		background-color: transparent;
+		font-family: var(--font-mono);
 	}
+
 	h2 {
 		margin: 0;
-		font-size: 1.25rem;
-		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		font-size: 1.1rem;
+		font-weight: 800;
+		color: var(--ctp-blue);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		transition: color 0.1s ease;
 	}
+
+	h2 span {
+		color: var(--ctp-yellow);
+		transition: transform 0.1s ease;
+	}
+
 	p {
-		margin-top: 0.5rem;
+		margin-top: 0.6rem;
 		margin-bottom: 0;
+		font-size: 0.88rem;
+		color: var(--ctp-subtext0);
+		line-height: 1.5;
 	}
+
 	.link-card:is(:hover, :focus-within) {
-		background-position: 0;
-		background-image: var(--accent-gradient);
+		border-color: var(--ctp-blue);
+		transform: translateY(-2px);
+		box-shadow: 3px 5px 0 0 var(--pixel-black), 0 0 12px var(--pixel-glow);
 	}
+
 	.link-card:is(:hover, :focus-within) h2 {
-		color: rgb(var(--accent-light));
+		color: var(--ctp-lavender);
+	}
+
+	.link-card:is(:hover, :focus-within) h2 span {
+		transform: translateX(4px);
 	}
 </style>
